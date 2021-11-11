@@ -14,13 +14,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "T_HINT")
+//@Table(name = "HINT")
 public class Hint {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long hintId;
     String hintTitle;
-    @Column(name = "T_HINT_DESCRIPTION")
+    //@Column(name = "HINT_DESCRIPTION")
     String hintDescription;
     //https://stackoverflow.com/questions/42366763/hibernate-creationtimestamp-updatetimestamp-for-calendar
     // @CreationTimestamp is not modified on update

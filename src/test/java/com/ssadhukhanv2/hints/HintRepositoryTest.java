@@ -17,7 +17,7 @@ public class HintRepositoryTest {
     HintRepository hintRepository;
 
     /*
-    * Constructor based Depenedency Injection
+    * Constructor based Dependency Injection
     * */
     @Autowired
     public HintRepositoryTest(HintRepository hintRepository) {

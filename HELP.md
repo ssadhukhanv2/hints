@@ -4,8 +4,14 @@
 ### Author Notes:
 
 ### Author Observations:
+***
+#### Unable to lazily load objects [Example-information.getContent()] from inside CommandlineRunner.run()
+Ans: **@Transactional Annotation** solves the issue (Check after few months)
+
 
 ### Useful Links:
+* Lazy loading results in exception from command line Runner https://stackoverflow.com/questions/32269192/spring-no-entitymanager-with-actual-transaction-available-for-current-thread
+* Unable to access entity manager from command line runner: https://stackoverflow.com/questions/38726193/spring-boot-jpa-error-why-am-i-not-able-to-use-command-line-runner-to-persist-a
 * Difference @javax.persistence.Id vs @org.springframework.data.annotation.Id
   * https://stackoverflow.com/questions/39643960/whats-the-difference-between-javax-persistence-id-and-org-springframework-data
 * JPA/Hibernate Cascade Types:

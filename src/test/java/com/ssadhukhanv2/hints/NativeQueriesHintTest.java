@@ -25,7 +25,7 @@ public class NativeQueriesHintTest {
 
     @Test
     public void nativeQuery() {
-        Query query = em.createNativeQuery("SELECT * FROM T_HINT", Hint.class);
+        Query query = em.createNativeQuery("SELECT * FROM HINT", Hint.class);
         List<Hint> hintList
                 = query.getResultList();
         log.info("SELECT * FROM HINT -> ", hintList);
@@ -34,21 +34,21 @@ public class NativeQueriesHintTest {
 
     @Test
     public void nativeQueryWithParameter() {
-        Query query = em.createNativeQuery("SELECT * FROM T_HINT where HINT_ID=?", Hint.class);
+        Query query = em.createNativeQuery("SELECT * FROM HINT where HINT_ID=?", Hint.class);
         query.setParameter(1, 1);
         List<Hint> hintList
                 = query.getResultList();
-        log.info("SELECT * FROM T_HINT where HINT_ID=?", hintList);
+        log.info("SELECT * FROM HINT where HINT_ID=?", hintList);
         Assertions.assertTrue(hintList.size() > 0);
     }
 
     @Test
     public void nativeQueryWithNamedParameter() {
-        Query query = em.createNativeQuery("SELECT * FROM T_HINT where HINT_ID= :id", Hint.class);
+        Query query = em.createNativeQuery("SELECT * FROM HINT where HINT_ID= :id", Hint.class);
         query.setParameter("id", 1);
         List<Hint> hintList
                 = query.getResultList();
-        log.info("SELECT * FROM T_HINT where HINT_ID= :id -> {}", hintList);
+        log.info("SELECT * FROM HINT where HINT_ID= :id -> {}", hintList);
         Assertions.assertTrue(hintList.size() > 0);
     }
 
@@ -56,10 +56,10 @@ public class NativeQueriesHintTest {
     @Test
     @DirtiesContext
     public void nativeQueryUpdate() {
-        Query query = em.createNativeQuery("UPDATE T_HINT SET T_HINT_DESCRIPTION='This is new update' WHERE HINT_ID= :id", Hint.class);
+        Query query = em.createNativeQuery("UPDATE HINT SET HINT_DESCRIPTION='This is new update' WHERE HINT_ID= :id", Hint.class);
         query.setParameter("id", 1);
         int rowsUpdated = query.executeUpdate();
-        log.info("UPDATE T_HINT SET T_HINT_DESCRIPTION='This is new update' WHERE HINT_ID= :id -> ", rowsUpdated);
+        log.info("UPDATE HINT SET HINT_DESCRIPTION='This is new update' WHERE HINT_ID= :id -> ", rowsUpdated);
         Assertions.assertTrue(rowsUpdated > 0);
     }
 }
