@@ -52,18 +52,6 @@ public class HintsApplication implements CommandLineRunner {
     @Transactional
     public void run(String... args) throws Exception {
         for (int i = 0; i < 5; i++) {
-            String hintTitle = "Hint Title " + (i + 1);
-            String hintDescription = "Hint Description " + (i + 1);
-            Hint hint = new Hint(null, hintTitle, hintDescription, null, null);
-            System.out.println(hint);
-            hintRepository.save(hint);
-            System.out.println("Find All " + hintRepository.findAll());
-        }
-        //hintRepository.playWithEntityManager();
-
-
-        Long tempId = 0L;
-        for (int i = 0; i < 5; i++) {
             String informationTitle = "Information Title " + (i + 1);
             String informationDescription = "Information Description " + (i + 1);
             String url = "www.google.com";
@@ -75,21 +63,56 @@ public class HintsApplication implements CommandLineRunner {
             String staticContent = "This is a very long" + repeatChars('g', i + 20) + " string";
             content.setStaticContent(staticContent);
             information.setContent(content);
-            informationRepository.save(information);
-
-            System.out.println("------------------------" + information.getInformationId() + "-------------------------");
             //printInformationWithContent(information.getInformationId());
-            em.persist(information);
-            tempId = information.getInformationId();
-
+            String hintTitle = "Hint Title " + (i + 1);
+            String hintDescription = "Hint Description " + (i + 1);
+            Hint hint = new Hint();
+            hint.setHintTitle(hintTitle);
+            hint.setHintDescription(hintDescription);
+            hint.addInformation(information);
+            hint.addInformation(information);
+            System.out.println(hint);
+            hintRepository.save(hint);
+            System.out.println("------------------------" + hint.getHintId() + "-------------------------");
+            //System.out.println("Find All " + hintRepository.findAll());
         }
-        Information information = informationRepository.findById(tempId);
-        informationRepository.findAll().forEach((info) -> {
-            System.out.println(info.toString() + "" + info.getContent().toString());
+        hintRepository.findAll().forEach((hint) -> {
+            log.info("------------------");
+            log.info("Hint->{}", hint);
+            hint.getInformationList().forEach((information -> {
+                log.info("Information->{}", information);
+                log.info("Content->{}", information.getContent());
+            }));
         });
-        informationJPARepository.findAll().forEach((info) -> {
-            System.out.println(info.toString() + "" + info.getContent().toString());
-        });
+
+//        Long tempId = 0L;
+//        for (int i = 0; i < 5; i++) {
+//            String informationTitle = "Information Title " + (i + 1);
+//            String informationDescription = "Information Description " + (i + 1);
+//            String url = "www.google.com";
+//            Information information = new Information();
+//            information.setInformationTitle(informationTitle);
+//            information.setInformationDescription(informationDescription);
+//            information.setInformationUrl(url);
+//            Content content = new Content();
+//            String staticContent = "This is a very long" + repeatChars('g', i + 20) + " string";
+//            content.setStaticContent(staticContent);
+//            information.setContent(content);
+//            informationRepository.save(information);
+//
+//            System.out.println("------------------------" + information.getInformationId() + "-------------------------");
+//            //printInformationWithContent(information.getInformationId());
+//            em.persist(information);
+//            tempId = information.getInformationId();
+//
+//        }
+//        Information information = informationRepository.findById(tempId);
+//        informationRepository.findAll().forEach((info) -> {
+//            System.out.println(info.toString() + "" + info.getContent().toString());
+//        });
+//        informationJPARepository.findAll().forEach((info) -> {
+//            System.out.println(info.toString() + "" + info.getContent().toString());
+//        });
 
     }
 

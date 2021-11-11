@@ -47,10 +47,9 @@ public class InformationRepository {
 
     //findAll
     public List<Information> findAll() {
-        /*
-         * Query written in JPQL
-         * */
-        return entityManager.createNativeQuery("SELECT * FROM CONTENT,INFORMATION WHERE CONTENT.CONTENT_ID =INFORMATION.CONTENT_CONTENT_ID ", Information.class).getResultList();
+        // Used Native Query here
+        // return entityManager.createNativeQuery("SELECT * FROM CONTENT,INFORMATION WHERE CONTENT.CONTENT_ID =INFORMATION.CONTENT_CONTENT_ID ", Information.class).getResultList();
+        return entityManager.createNativeQuery("SELECT * FROM INFORMATION ", Information.class).getResultList();
     }
 
     public void printInformationWithContent(Long id) {
