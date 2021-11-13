@@ -4,8 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -28,9 +31,17 @@ public class Content {
     // (mappedBy = "content") specifies that the parent class("Information")
     // is having a field called "content"
     // so essentially, table for Information will have the column for contentId
-    @OneToOne(fetch = FetchType.LAZY,mappedBy = "content")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "content")
     private Information information;
+    @CreationTimestamp
+    LocalDateTime createdDate;
+    @UpdateTimestamp
+    LocalDateTime lastUpdatedDate;
 
+
+    @ToString.Exclude
+    @ManyToOne
+    private User user;
 
 
 }

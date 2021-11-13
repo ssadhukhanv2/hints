@@ -40,6 +40,9 @@ public class Information {
     // this will make Hint Parent, and HINT_INFORMATION_LIST which will be created by HINT would be used for Mapping!!
     private List<Hint> hintList = new ArrayList<Hint>();
 
+    @ToString.Exclude
+    @ManyToOne
+    private User user;
 
     public void addHint(Hint hint) {
         this.hintList.add(hint);

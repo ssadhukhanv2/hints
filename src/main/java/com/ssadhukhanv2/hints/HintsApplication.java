@@ -3,9 +3,11 @@ package com.ssadhukhanv2.hints;
 import com.ssadhukhanv2.hints.model.Content;
 import com.ssadhukhanv2.hints.model.Hint;
 import com.ssadhukhanv2.hints.model.Information;
+import com.ssadhukhanv2.hints.model.User;
 import com.ssadhukhanv2.hints.repo.HintRepository;
 import com.ssadhukhanv2.hints.repo.InformationJPARepository;
 import com.ssadhukhanv2.hints.repo.InformationRepository;
+import com.ssadhukhanv2.hints.repo.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -44,6 +46,10 @@ public class HintsApplication implements CommandLineRunner {
     @Autowired
     InformationJPARepository informationJPARepository;
 
+    @Autowired
+    UserRepository userRepository;
+
+
     public static void main(String[] args) {
         SpringApplication.run(HintsApplication.class, args);
     }
@@ -51,40 +57,8 @@ public class HintsApplication implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        for (int i = 0; i < 5; i++) {
-            String informationTitle = "Information Title " + (i + 1);
-            String informationDescription = "Information Description " + (i + 1);
-            String url = "www.google.com";
-            Information information = new Information();
-            information.setInformationTitle(informationTitle);
-            information.setInformationDescription(informationDescription);
-            information.setInformationUrl(url);
-            Content content = new Content();
-            String staticContent = "This is a very long" + repeatChars('g', i + 20) + " string";
-            content.setStaticContent(staticContent);
-            information.setContent(content);
-            //printInformationWithContent(information.getInformationId());
-            String hintTitle = "Hint Title " + (i + 1);
-            String hintDescription = "Hint Description " + (i + 1);
-            Hint hint = new Hint();
-            hint.setHintTitle(hintTitle);
-            hint.setHintDescription(hintDescription);
-            hint.addInformation(information);
-            hint.addInformation(information);
-            System.out.println(hint);
-            hintRepository.save(hint);
-            System.out.println("------------------------" + hint.getHintId() + "-------------------------");
-            //System.out.println("Find All " + hintRepository.findAll());
-        }
-        hintRepository.findAll().forEach((hint) -> {
-            log.info("------------------");
-            log.info("Hint->{}", hint);
-            hint.getInformationList().forEach((information -> {
-                log.info("Information->{}", information);
-                log.info("Content->{}", information.getContent());
-            }));
-        });
 
+        createData();
 //        Long tempId = 0L;
 //        for (int i = 0; i < 5; i++) {
 //            String informationTitle = "Information Title " + (i + 1);
@@ -116,13 +90,73 @@ public class HintsApplication implements CommandLineRunner {
 
     }
 
-    public void printInformationWithContent(Long id) {
-        Information information = em.find(Information.class, id);
-        Content content = information.getContent();
-        log.info("information -> {}", information);
-        System.out.println(information);
+    @Transactional
+    public void createData() {
+        int numberOfUsers = 10;
 
-        log.info("content -> {}", information.getContent());
+        for (int u = 1; u <= numberOfUsers; u++) {
+
+            String userName = "User " + u;
+            String userEmail = "user" + u + "@emaildomain.com";
+            String userPassword = "user" + u + "password";
+            User user = new User();
+            user.setUserName(userName);
+            user.setUserEmail(userEmail);
+            user.setUserPassword(userPassword);
+            userRepository.save(user);
+
+            for (int i = 0; i < 5; i++) {
+                String informationTitle = "Information Title " + (i + 1);
+                String informationDescription = "Information Description " + (i + 1);
+                String url = "www.google.com";
+                Information information = new Information();
+                information.setInformationTitle(informationTitle);
+                information.setInformationDescription(informationDescription);
+                information.setInformationUrl(url);
+
+                information.setUser(user);
+
+
+                Content content = new Content();
+                String staticContent = "This is a very long" + repeatChars('g', i + 20) + " string";
+                content.setStaticContent(staticContent);
+
+                content.setUser(user);
+
+
+                information.setContent(content);
+                //printInformationWithContent(information.getInformationId());
+                String hintTitle = "Hint Title " + (i + 1);
+                String hintDescription = "Hint Description " + (i + 1);
+                Hint hint = new Hint();
+                hint.setHintTitle(hintTitle);
+                hint.setHintDescription(hintDescription);
+                hint.addInformation(information);
+                hint.addInformation(information);
+
+
+                hint.setUser(user);
+
+                System.out.println(hint);
+                hintRepository.save(hint);
+                System.out.println("------------------------" + hint.getHintId() + "-------------------------");
+                //System.out.println("Find All " + hintRepository.findAll());
+            }
+            hintRepository.findAll().forEach((hint) -> {
+                log.info("------------------");
+                log.info("Hint->{}", hint);
+                log.info("Hint.User->{}", hint.getUser());
+                hint.getInformationList().forEach((information -> {
+                    log.info("Information->{}", information);
+                    log.info("Information.user->{}", information.getUser());
+                    log.info("Content->{}", information.getContent());
+                    log.info("Content.user->{}", information.getContent().getUser());
+                }));
+            });
+
+        }
+
+
     }
 
     public String repeatChars(char c, int reps) {

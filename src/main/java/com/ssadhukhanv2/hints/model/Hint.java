@@ -34,7 +34,7 @@ public class Hint {
     LocalDateTime lastUpdatedDate;
 
     @ToString.Exclude
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL) //This results in a table HINT_INFORMATION_LIST
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) //This results in a table HINT_INFORMATION_LIST
     // Unlike Information.hintList which is (mappedBy = "informationList")
     // informationList is not referenced by anything, making Hint the Parent
     // as a result the JOIN_TABLE by default is HINT_INFORMATION_LIST
@@ -47,5 +47,9 @@ public class Hint {
     public void addInformation(Information information) {
         this.informationList.add(information);
     }
+
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
 }
