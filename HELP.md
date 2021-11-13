@@ -1,7 +1,12 @@
 # Getting Started
 
 
-### Author Notes:
+### Useful Queries:
+* SELECT * FROM USER;
+* SELECT * FROM CONTENT;
+* SELECT * FROM INFORMATION;
+* SELECT * FROM HINT;
+
 
 ### Author Observations:
 ***
@@ -10,6 +15,16 @@ Ans: **@Transactional Annotation** solves the issue (Check after few months)
 
 
 ### Useful Links:
+
+* Why DAO or Respository bean can be singleton in Spring
+  * http://shengwangi.blogspot.com/2016/01/why-dao-or-respository-bean-can-be-singleton-in-spring.html
+
+* Prototype beans in real-world scenarios
+https://learning.oreilly.com/library/view/spring-start-here/9781617298691/Text/ch05.htm#sigil_toc_id_62
+* why @EnableAspectJAutoProxy is not required for spring-boot
+  * https://stackoverflow.com/questions/48625149/spring-aop-works-without-enableaspectjautoproxy
+* AOP Documentation: 
+  * https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#aop-aspectj-support
 * Lazy loading results in exception from command line Runner https://stackoverflow.com/questions/32269192/spring-no-entitymanager-with-actual-transaction-available-for-current-thread
 * Unable to access entity manager from command line runner: https://stackoverflow.com/questions/38726193/spring-boot-jpa-error-why-am-i-not-able-to-use-command-line-runner-to-persist-a
 * Difference @javax.persistence.Id vs @org.springframework.data.annotation.Id
