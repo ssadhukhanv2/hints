@@ -1,5 +1,6 @@
 package com.ssadhukhanv2.hints;
 
+import com.ssadhukhanv2.hints.mail.EmailServiceImpl;
 import com.ssadhukhanv2.hints.model.Content;
 import com.ssadhukhanv2.hints.model.Hint;
 import com.ssadhukhanv2.hints.model.Information;
@@ -49,6 +50,8 @@ public class HintsApplication implements CommandLineRunner {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    EmailServiceImpl emailService;
 
     public static void main(String[] args) {
         SpringApplication.run(HintsApplication.class, args);
@@ -57,37 +60,10 @@ public class HintsApplication implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-
         createData();
-//        Long tempId = 0L;
-//        for (int i = 0; i < 5; i++) {
-//            String informationTitle = "Information Title " + (i + 1);
-//            String informationDescription = "Information Description " + (i + 1);
-//            String url = "www.google.com";
-//            Information information = new Information();
-//            information.setInformationTitle(informationTitle);
-//            information.setInformationDescription(informationDescription);
-//            information.setInformationUrl(url);
-//            Content content = new Content();
-//            String staticContent = "This is a very long" + repeatChars('g', i + 20) + " string";
-//            content.setStaticContent(staticContent);
-//            information.setContent(content);
-//            informationRepository.save(information);
-//
-//            System.out.println("------------------------" + information.getInformationId() + "-------------------------");
-//            //printInformationWithContent(information.getInformationId());
-//            em.persist(information);
-//            tempId = information.getInformationId();
-//
-//        }
-//        Information information = informationRepository.findById(tempId);
-//        informationRepository.findAll().forEach((info) -> {
-//            System.out.println(info.toString() + "" + info.getContent().toString());
-//        });
-//        informationJPARepository.findAll().forEach((info) -> {
-//            System.out.println(info.toString() + "" + info.getContent().toString());
-//        });
 
+        emailService.sendSimpleMessage("senderemail@gmail.com", "Server Started", "Hint Server Started");
+        emailService.sendMessageWithAttachment("senderemail@gmail.com", "Server Started", "Hint Server Started","HELP.md");
     }
 
     @Transactional

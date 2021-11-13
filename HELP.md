@@ -15,7 +15,15 @@ Ans: **@Transactional Annotation** solves the issue (Check after few months)
 
 
 ### Useful Links:
-
+* How to send a mail in java to Gmail, when "Allow less secure apps: OFF"
+  * https://stackoverflow.com/questions/35550064/how-to-send-a-mail-in-java-to-gmail-when-allow-less-secure-apps-off
+  * https://developers.google.com/api-client-library/java/google-api-java-client/oauth2
+  * https://stackoverflow.com/questions/38159384/i-want-to-use-gmail-within-my-website-to-send-and-receive-mails-how-can-i-achie
+* Send emails from Apps: https://www.baeldung.com/spring-email
+* Authentication Failed for less secure apps:
+  * https://stackoverflow.com/questions/23137012/535-5-7-8-username-and-password-not-accepted  
+* Enable Authetication for less secure Apps:
+  * https://myaccount.google.com/lesssecureapps?pli=1&rapt=AEjHL4MbKxuU1qglWw5Oj0wsw4xMlVsxZPsOIWAfmiHBFT-5yNn3Ei_ENuVUKdarIXW3n7dBwCqfuhrJ_IMMPa0F3pafMxpDBg
 * Why DAO or Respository bean can be singleton in Spring
   * http://shengwangi.blogspot.com/2016/01/why-dao-or-respository-bean-can-be-singleton-in-spring.html
 
