@@ -45,4 +45,13 @@ public class UserRepository {
         // return entityManager.createNativeQuery("SELECT * FROM CONTENT,INFORMATION WHERE CONTENT.CONTENT_ID =INFORMATION.CONTENT_CONTENT_ID ", Information.class).getResultList();
         return entityManager.createNativeQuery("SELECT * FROM USER ", User.class).getResultList();
     }
+
+    //findByUserName
+    public User findByUserNameOrEmail(String userNameOrEmail) {
+        User user = entityManager.createQuery("select u from User u WHERE u.userName= :USERNAME OR u.userEmail= :USEREMAIL", User.class)
+                .setParameter("USERNAME", userNameOrEmail)
+                .setParameter("USEREMAIL", userNameOrEmail).getSingleResult();
+        return user;
+
+    }
 }

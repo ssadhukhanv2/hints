@@ -40,6 +40,15 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
@@ -58,6 +67,14 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--This is a bug in Spring 5.2.1 where bouncycastle is not part of the springboot started bom,
+        so need to be specified explicitly if SCrypt is being used
+        https://github.com/spring-projects/spring-security/issues/7805# -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk15on</artifactId>
+            <version>1.64</version>
+        </dependency>
     </dependencies>
 
     <build>
