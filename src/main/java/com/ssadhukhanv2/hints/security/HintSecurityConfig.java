@@ -16,7 +16,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Slf4j
 @Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class HintSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Override
@@ -69,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .passwordEncoder(NoOpPasswordEncoder.getInstance());
 //    }
 
-    @Bean("encoder")
+    @Bean//("encoder")
     public PasswordEncoder passwordEncoder() {
         System.out.println("Setting Password Encoder!!!!!");
         // return NoOpPasswordEncoder.getInstance();

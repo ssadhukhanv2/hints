@@ -79,7 +79,7 @@ public class HintsApplication implements CommandLineRunner {
 
 
     @Autowired
-    @Qualifier("encoder")
+//    @Qualifier("encoder")
     PasswordEncoder passwordEncoder;
 
     public static void main(String[] args) {
