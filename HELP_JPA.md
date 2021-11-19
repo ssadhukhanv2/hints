@@ -36,6 +36,7 @@ https://learning.oreilly.com/library/view/spring-start-here/9781617298691/Text/c
 * **Jakarta EE** formerly Java Platform, Enterprise Edition and Java 2 Platform Enterprise Edition is a set of specifications, extending Java SE with specifications for enterprise features such as distributed computing and web services.
 
 ### Useful Links:
+* Hikari Configurations: https://github.com/brettwooldridge/HikariCP#gear-configuration-knobs-baby
 * Spring Data JPA: https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#preface
 * Spring Data JDBC: https://docs.spring.io/spring-data/jdbc/docs/current/reference/html/#reference
 * Custom Implementation for Spring Data Repositories

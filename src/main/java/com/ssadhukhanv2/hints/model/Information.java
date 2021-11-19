@@ -35,8 +35,8 @@ public class Information {
     @ToString.Exclude
     //@ManyToMany(mappedBy = "informationList") //This results in a table INFORMATION_HINT_LIST
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "informationList")
-    //This suggest that mapping for the below
-    // list is availale in an object informationList so table INFORMATION_HINT_LIST will not be created
+    //This suggests that mapping for the below
+    // list is available in an object informationList so table INFORMATION_HINT_LIST will not be created
     // this will make Hint Parent, and HINT_INFORMATION_LIST which will be created by HINT would be used for Mapping!!
     private List<Hint> hintList = new ArrayList<Hint>();
 

@@ -1,6 +1,13 @@
 # Getting Started
 
 
+
+# Scrap Board:
+* Read this: https://mp.weixin.qq.com/s/kB4m0YJas9LHuNT8JH5ZmQ
+* Check the design Patterns in Spring Security after completing the Spring Security https://www.fatalerrors.org/a/review-of-eight-classic-design-patterns-in-spring-security-framework.html
+* https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI1NDY0MTkzNQ==&action=getalbum&album_id=1319828555819286528&scene=173&from_msgid=2247489418&from_itemidx=1&count=3&nolastread=1#wechat_redirect
+
+
 ### Useful Queries:
 * SELECT * FROM USER;
 * SELECT * FROM CONTENT;
@@ -20,11 +27,16 @@ Ans: **@Transactional Annotation** solves the issue (Check after few months)
 https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.custom-implementations
 
 
+### Task
+
+
+
 ### Important Lessons:
-* UI
 
 ### Useful Links:
-
+* Optional Interface: https://stackify.com/optional-java/
+* Streams: https://stackify.com/streams-guide-java-8/
+* Spring Security Doc: https://docs.spring.io/spring-security/site/docs/
 * This is a **Bug** in Spring 5.2.1 where bouncycastle it not part of the springbootstart BOM, 
 so it needs to be specified explicitly specified as dependency if SCryptPasswordEncoder is being used as it uses "SCrypt"(present in bouncy castle) 
 https://github.com/spring-projects/spring-security/issues/7805#

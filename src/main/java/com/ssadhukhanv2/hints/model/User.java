@@ -1,5 +1,6 @@
 package com.ssadhukhanv2.hints.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -29,11 +31,21 @@ public class User {
     Long userId;
     String userName;
     String userEmail;
+
+    @JsonIgnore
     String userPassword;
     @CreationTimestamp
     LocalDateTime createdDate;
     @UpdateTimestamp
     LocalDateTime lastUpdatedDate;
+
+
+    // One user can be associated with multiple roles
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Authority> authorityList=new ArrayList<>();
+
+
+
 
     @ToString.Exclude
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")

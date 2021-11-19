@@ -1,10 +1,7 @@
 package com.ssadhukhanv2.hints;
 
 import com.ssadhukhanv2.hints.mail.EmailServiceImpl;
-import com.ssadhukhanv2.hints.model.Content;
-import com.ssadhukhanv2.hints.model.Hint;
-import com.ssadhukhanv2.hints.model.Information;
-import com.ssadhukhanv2.hints.model.User;
+import com.ssadhukhanv2.hints.model.*;
 import com.ssadhukhanv2.hints.repo.HintRepository;
 import com.ssadhukhanv2.hints.repo.InformationJPARepository;
 import com.ssadhukhanv2.hints.repo.InformationRepository;
@@ -24,6 +21,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcTemplate;
 //import org.springframework.security.web.FilterChainProxy;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +31,9 @@ import org.springframework.web.client.RestTemplate;
 import javax.persistence.*;
 import javax.servlet.FilterChain;
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -56,6 +57,23 @@ public class HintsApplication implements CommandLineRunner {
     @Value("${admin.email}")
     @Autowired
     String adminEmail;
+    @Value("${admin.role.name}")
+    @Autowired
+    String adminRoleName;
+
+
+    @Value("${sudo.username}")
+    @Autowired
+    String sudoUserName;
+    @Value("${sudo.password}")
+    @Autowired
+    String sudoPassword;
+    @Value("${sudo.email}")
+    @Autowired
+    String sudoEmail;
+    @Value("${sudo.role.name}")
+    @Autowired
+    String sudoRoleName;
 
 
     @Autowired
@@ -77,7 +95,6 @@ public class HintsApplication implements CommandLineRunner {
     EmailServiceImpl emailService;
 
 
-
     @Autowired
 //    @Qualifier("encoder")
     PasswordEncoder passwordEncoder;
@@ -89,17 +106,35 @@ public class HintsApplication implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        createData();
+        //createData();
+//        String userName = adminUserName;
+//        String userEmail = adminEmail;
+//        String userPassword = adminPassword;
 
-
-        String userName = adminUserName;
-        String userEmail = adminEmail;
-        String userPassword = adminPassword;
+        //Admin User
         User user = new User();
-        user.setUserName(userName);
-        user.setUserEmail(userEmail);
-        user.setUserPassword(userPassword);
+        user.setUserName(adminUserName);
+        user.setUserEmail(adminEmail);
+        user.setUserPassword(passwordEncoder.encode(adminPassword));
+        List<Authority> authorityList = new ArrayList<>();
+        Authority authority = new Authority();
+        authority.setUser(user);
+        authority.setName(adminRoleName);
+        user.getAuthorityList().add(authority);
         userRepository.save(user);
+
+        //Sudo User
+        user = new User();
+        user.setUserName(sudoUserName);
+        user.setUserEmail(sudoEmail);
+        user.setUserPassword(passwordEncoder.encode(sudoPassword));
+        authorityList = new ArrayList<>();
+        authority = new Authority();
+        authority.setUser(user); //User needs to be set or else it doesn't save the user primary key
+        authority.setName(sudoRoleName);
+        user.getAuthorityList().add(authority);
+        userRepository.save(user);
+
 
         //emailService.sendSimpleMessage("senderemail@gmail.com", "Server Started", "Hint Server Started");
         //emailService.sendMessageWithAttachment("senderemail@gmail.com", "Server Started", "Hint Server Started","HELP.md");
@@ -117,7 +152,7 @@ public class HintsApplication implements CommandLineRunner {
             User user = new User();
             user.setUserName(userName);
             user.setUserEmail(userEmail);
-            String password=passwordEncoder.encode("password");
+            String password = passwordEncoder.encode("password");
             user.setUserPassword(password);
             userRepository.save(user);
 
@@ -207,5 +242,11 @@ public class HintsApplication implements CommandLineRunner {
 //        AbstractJdbcConfiguration abstractJdbcConfiguration;
 //
 
+
+        //https://www.fatalerrors.org/a/review-of-eight-classic-design-patterns-in-spring-security-framework.html
+
+        //1. Template method mode
+        AbstractUserDetailsAuthenticationProvider abstractUserDetailsAuthenticationProvider;
+        ProviderManager providerManager;
     }
 }

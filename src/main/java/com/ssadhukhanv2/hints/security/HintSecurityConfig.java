@@ -40,7 +40,19 @@ public class HintSecurityConfig extends WebSecurityConfigurerAdapter {
         log.info("Security is being configured");
         http.authorizeRequests((requests) -> {
             //((ExpressionUrlAuthorizationConfigurer.AuthorizedUrl) requests.anyRequest()).authenticated();
-            requests.antMatchers("/h2-console/**").permitAll().anyRequest().authenticated();
+            requests.antMatchers("/h2-console/**").permitAll()
+                    .antMatchers("/portfolio").permitAll()
+                    .antMatchers("/addHint").hasRole("ADMIN")
+                    .antMatchers("/updateHint").hasAnyRole("ADMIN", "SUDO")
+                    .antMatchers("/deleteHint").hasRole("SUDO")
+                    .anyRequest().authenticated();
+
+
+
+//            requests.antMatchers("/h2-console/**").permitAll()
+//                    .antMatchers("/portfolio").permitAll()
+//                    .antMatchers("/addHint").hasRole("ADMIN")
+//                    .anyRequest().authenticated();
         });
         // Disable the csrf check
         http.csrf().disable();

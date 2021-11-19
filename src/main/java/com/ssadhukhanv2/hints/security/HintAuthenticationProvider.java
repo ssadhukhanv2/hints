@@ -38,8 +38,22 @@ import org.springframework.stereotype.Component;
 // HintSecurityConfig provides the Bean class for this.
 
 
+/**
+ *
+ * Functionality Similar to spring AbstractUserDetailsAuthenticationProvider
+ * Next time extend AbstractUserDetailsAuthenticationProvider and create the Provider
+ * or use DaoAuthenticationProvider  <br/>
+ * {@link org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider} <br/>
+ * {@link org.springframework.security.authentication.dao.DaoAuthenticationProvider}
+ * * @author Subhrajit Saadhukhan
+ *  */
+// Read this https://www.fatalerrors.org/a/review-of-eight-classic-design-patterns-in-spring-security-framework.html
+
+
 @Component
 public class HintAuthenticationProvider implements AuthenticationProvider {
+
+    //Spring Implementation is AbstractUserDetailsAuthenticationProvider
 
     @Autowired
     UserDetailsService userDetailsService;

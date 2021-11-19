@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class HintUserDetails implements UserDetails {
     private final User user;
@@ -20,12 +22,23 @@ public class HintUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
+        //List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
         // Later we can implement logic for Custom Authority & Role
         // https://stackoverflow.com/questions/41770156/spring-add-custom-user-details-to-spring-security-user/41772510
-        grantedAuthorityList.add(new SimpleGrantedAuthority("ADMIN"));
+        /*grantedAuthorityList.add(new SimpleGrantedAuthority("ADMIN"));
         grantedAuthorityList.add(new SimpleGrantedAuthority("MANAGER"));
-        grantedAuthorityList.add(new SimpleGrantedAuthority("INTERN"));
+        grantedAuthorityList.add(new SimpleGrantedAuthority("INTERN"));*/
+
+
+        //Here we have used java 9 optional interfaces & Streams
+        //For more details reference:
+        // https://stackify.com/optional-java/
+        // https://stackify.com/streams-guide-java-8/
+        List<GrantedAuthority> grantedAuthorityList = user.getAuthorityList().stream()
+                .map(authority
+                        -> new SimpleGrantedAuthority(authority.getName()))
+                .collect(Collectors.toList());
+
         return grantedAuthorityList;
     }
 
