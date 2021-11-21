@@ -40,24 +40,27 @@ public class User {
     LocalDateTime lastUpdatedDate;
 
 
+
+    @ToString.Exclude
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Node> nodeList=new ArrayList<>();
+
+    @ToString.Exclude
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Information> informationList=new ArrayList<>();
+
+    @ToString.Exclude
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Content> contentList=new ArrayList<>();
+
     // One user can be associated with multiple roles
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Authority> authorityList=new ArrayList<>();
-
-
-
-
     @ToString.Exclude
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Hint> hintList;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Authority> authorityList = new ArrayList<>();
 
-    @ToString.Exclude
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Information> informationList;
 
-    @ToString.Exclude
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Content> contentList;
-
+    public void addNode(Node node) {
+        nodeList.add(node);
+    }
 
 }

@@ -1,6 +1,8 @@
 package com.ssadhukhanv2.hints.repo;
 
 import com.ssadhukhanv2.hints.model.Information;
+import com.ssadhukhanv2.hints.model.Node;
+import com.ssadhukhanv2.hints.model.NodeCategory;
 import com.ssadhukhanv2.hints.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Transactional
@@ -40,6 +43,18 @@ public class UserRepository {
     }
 
     //findAll
+    public List<Node> findRootNodes(User user) {
+
+        TypedQuery<Node> query = entityManager.createQuery(
+                "SELECT n FROM Node n JOIN User u ON u.userId=n.user.userId where u.userId=:userId and n.nodeCategory=:category", Node.class);
+        query.setParameter("userId", user.getUserId());
+        query.setParameter("category", NodeCategory.ROOT);
+
+        return query.getResultList();
+    }
+
+
+    //findAll
     public List<User> findAll() {
         // Used Native Query here
         // return entityManager.createNativeQuery("SELECT * FROM CONTENT,INFORMATION WHERE CONTENT.CONTENT_ID =INFORMATION.CONTENT_CONTENT_ID ", Information.class).getResultList();
@@ -51,6 +66,7 @@ public class UserRepository {
         User user = entityManager.createQuery("select u from User u WHERE u.userName= :USERNAME OR u.userEmail= :USEREMAIL", User.class)
                 .setParameter("USERNAME", userNameOrEmail)
                 .setParameter("USEREMAIL", userNameOrEmail).getSingleResult();
+        System.out.println(user.getNodeList());
         return user;
 
     }

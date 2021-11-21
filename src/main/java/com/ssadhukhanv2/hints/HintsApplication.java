@@ -2,10 +2,7 @@ package com.ssadhukhanv2.hints;
 
 import com.ssadhukhanv2.hints.mail.EmailServiceImpl;
 import com.ssadhukhanv2.hints.model.*;
-import com.ssadhukhanv2.hints.repo.HintRepository;
-import com.ssadhukhanv2.hints.repo.InformationJPARepository;
-import com.ssadhukhanv2.hints.repo.InformationRepository;
-import com.ssadhukhanv2.hints.repo.UserRepository;
+import com.ssadhukhanv2.hints.repo.*;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
@@ -79,8 +76,8 @@ public class HintsApplication implements CommandLineRunner {
     @Autowired
     EntityManager em;
 
-    @Autowired
-    HintRepository hintRepository;
+//    @Autowired
+//    HintRepository hintRepository;
 
     @Autowired
     InformationRepository informationRepository;
@@ -96,6 +93,10 @@ public class HintsApplication implements CommandLineRunner {
 
 
     @Autowired
+    NodeRepository nodeRepository;
+
+
+    @Autowired
 //    @Qualifier("encoder")
     PasswordEncoder passwordEncoder;
 
@@ -106,7 +107,7 @@ public class HintsApplication implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        //createData();
+        createData();
 //        String userName = adminUserName;
 //        String userEmail = adminEmail;
 //        String userPassword = adminPassword;
@@ -135,9 +136,33 @@ public class HintsApplication implements CommandLineRunner {
         user.getAuthorityList().add(authority);
         userRepository.save(user);
 
+        logUserData("user1@emaildomain.com");
+//        user = userRepository.findByUserNameOrEmail("user1@emaildomain.com");
+//        log.info("{}", user.getAuthorityList());
+//        user = userRepository.findByUserNameOrEmail("admin_user");
+//        log.info("{}", user.getAuthorityList());
 
         //emailService.sendSimpleMessage("senderemail@gmail.com", "Server Started", "Hint Server Started");
         //emailService.sendMessageWithAttachment("senderemail@gmail.com", "Server Started", "Hint Server Started","HELP.md");
+    }
+
+    @Transactional
+    public void logUserData(String userNameOrEmail) {
+        User user = userRepository.findByUserNameOrEmail(userNameOrEmail);
+        log.info("----------------------Logging UserDetails------------------------");
+        log.info("User>>>>{}", user);
+        for (Node node : userRepository.findRootNodes(user)) {//user.getNodeList()
+            log.info("Node>>>>{}", node);
+            log.info("Information>>>>{}", node.getInformationList());
+            for (Node childNode : node.getReferenceNodeList()) {
+                log.info("Node>>>>>>>>{}", childNode);
+                log.info("Information>>>>>>>>{}", childNode.getInformationList());
+                for (Node superChildNode : childNode.getReferenceNodeList()) {
+                    log.info("Node>>>>>>>>>>>>>>>>{}", superChildNode);
+                    log.info("Information>>>>>>>>>>>>>>>>{}", superChildNode.getInformationList());
+                }
+            }
+        }
     }
 
     @Transactional
@@ -156,59 +181,79 @@ public class HintsApplication implements CommandLineRunner {
             user.setUserPassword(password);
             userRepository.save(user);
 
+            Tag tag1 = new Tag(null, "tag1", null, null);
+            Tag tag2 = new Tag(null, "tag2", null, null);
+            Tag tag3 = new Tag(null, "tag3", null, null);
+            Tag tag4 = new Tag(null, "tag4", null, null);
+            Tag tag5 = new Tag(null, "tag5", null, null);
+
+
             for (int i = 0; i < 5; i++) {
-                String informationTitle = "Information Title " + (i + 1);
-                String informationDescription = "Information Description " + (i + 1);
-                String url = "www.google.com";
-                Information information = new Information();
-                information.setInformationTitle(informationTitle);
-                information.setInformationDescription(informationDescription);
-                information.setInformationUrl(url);
+                Node node = new Node();
+                node.setNodeCategory(NodeCategory.ROOT);
+                node.setNodeTitle("Node " + i);
+                node.setNodeDescription("Node Description for Node " + i);
+                node.setUser(user);
+                //user.addNode(node);
+                populateInformmation(node);
+                //Tagging
+                node.addTag(tag5);
+                for (int j = 0; j < 5; j++) {
+                    Node childNode = new Node();
+                    childNode.setNodeCategory(NodeCategory.CHILD);
+                    childNode.setNodeTitle("Node " + i + "." + j);
+                    childNode.setNodeDescription("Node Description for Node " + i + "." + j);
+                    childNode.setUser(user);
+                    populateInformmation(childNode);
 
-                information.setUser(user);
+                    //Tagging
+                    childNode.addTag(tag1);
+                    childNode.addTag(tag2);
 
+                    for (int k = 0; k < 5; k++) {
+                        Node superChildNode = new Node();
+                        superChildNode.setNodeCategory(NodeCategory.CHILD);
+                        superChildNode.setNodeTitle("Node " + i + "." + j + "." + k);
+                        superChildNode.setNodeDescription("Node Description for Node " + i + "." + j + "." + k);
+                        superChildNode.setUser(user);
+                        populateInformmation(superChildNode);
+                        //Tagging
+                        superChildNode.addTag(tag3);
+                        superChildNode.addTag(tag4);
 
-                Content content = new Content();
-                String staticContent = "This is a very long" + repeatChars('g', i + 20) + " string";
-                content.setStaticContent(staticContent);
+                        childNode.addChildNode(superChildNode);
+                    }
+                    node.addChildNode(childNode);
 
-                content.setUser(user);
-
-
-                information.setContent(content);
-                //printInformationWithContent(information.getInformationId());
-                String hintTitle = "Hint Title " + (i + 1);
-                String hintDescription = "Hint Description " + (i + 1);
-                Hint hint = new Hint();
-                hint.setHintTitle(hintTitle);
-                hint.setHintDescription(hintDescription);
-                hint.addInformation(information);
-                hint.addInformation(information);
-
-
-                hint.setUser(user);
-
-//                System.out.println(hint);
-                hintRepository.save(hint);
-//                System.out.println("------------------------" + hint.getHintId() + "-------------------------");
-                //System.out.println("Find All " + hintRepository.findAll());
+                }
+                nodeRepository.save(node);
             }
-            hintRepository.findAll().forEach((hint) -> {
-//                log.info("------------------");
-//                log.info("Hint->{}", hint);
-//                log.info("Hint.User->{}", hint.getUser());
-                hint.getInformationList().forEach((information -> {
-//                    log.info("Information->{}", information);
-//                    log.info("Information.user->{}", information.getUser());
-//                    log.info("Content->{}", information.getContent());
-//                    log.info("Content.user->{}", information.getContent().getUser());
-                }));
-            });
-
         }
-        User user = userRepository.findByUserNameOrEmail("user10@emaildomain.com");
-        log.info(user.toString());
+    }
 
+    @Transactional
+    public void populateInformmation(Node node) {
+
+        for (int i = 0; i < 5; i++) {
+            String informationTitle = "Information Title " + (i + 1);
+            String informationDescription = "Information Description " + (i + 1);
+            String url = "www.google.com";
+            Information information = new Information();
+            information.setInformationTitle(informationTitle);
+            information.setInformationDescription(informationDescription);
+            information.setInformationUrl(url);
+
+            information.setUser(node.getUser());
+
+            Content content = new Content();
+            String staticContent = "This is a very long" + repeatChars('g', i + 20) + " string";
+            content.setStaticContent(staticContent);
+
+            content.setUser(node.getUser());
+
+            information.setContent(content);
+            node.addInformation(information);
+        }
     }
 
     public String repeatChars(char c, int reps) {

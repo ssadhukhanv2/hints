@@ -33,19 +33,15 @@ public class Information {
     private Content content;
 
     @ToString.Exclude
-    //@ManyToMany(mappedBy = "informationList") //This results in a table INFORMATION_HINT_LIST
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "informationList")
-    //This suggests that mapping for the below
-    // list is available in an object informationList so table INFORMATION_HINT_LIST will not be created
-    // this will make Hint Parent, and HINT_INFORMATION_LIST which will be created by HINT would be used for Mapping!!
-    private List<Hint> hintList = new ArrayList<Hint>();
+    private List<Node> nodeList = new ArrayList<Node>();
 
     @ToString.Exclude
     @ManyToOne
     private User user;
 
-    public void addHint(Hint hint) {
-        this.hintList.add(hint);
+    public void addNode(Node node) {
+        this.nodeList.add(node);
     }
 
 }

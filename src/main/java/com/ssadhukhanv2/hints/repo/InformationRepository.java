@@ -2,7 +2,7 @@ package com.ssadhukhanv2.hints.repo;
 
 
 import com.ssadhukhanv2.hints.model.Content;
-import com.ssadhukhanv2.hints.model.Hint;
+//import com.ssadhukhanv2.hints.model.Hint;
 import com.ssadhukhanv2.hints.model.Information;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
