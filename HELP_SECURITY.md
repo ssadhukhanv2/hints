@@ -16,24 +16,19 @@
 
 
 ### Author Observations:
-***
-#### Unable to lazily load objects [Example-information.getContent()] from inside CommandlineRunner.run()
-Ans: **@Transactional Annotation** solves the issue (Check after few months)
 
 
 ### Questions
-* How does **JdbcTemplate**, **CrudRepository** & **JPARepository** relate??
-* Custom Implementation for Spring Data Repositories
-https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.custom-implementations
 
 
 ### Task
-
-
+* Use Filters and Interceptors to compress payload https://eclipse-ee4j.github.io/jersey.github.io/documentation/latest/filters-and-interceptors.html
+* Spring Security Architecture  https://spring.io/guides/topicals/spring-security-architecture
 
 ### Important Lessons:
 
 ### Useful Links:
+* Spring security architecture: https://spring.io/guides/topicals/spring-security-architecture
 * Optional Interface: https://stackify.com/optional-java/
 * Streams: https://stackify.com/streams-guide-java-8/
 * Spring Security Doc: https://docs.spring.io/spring-security/site/docs/
