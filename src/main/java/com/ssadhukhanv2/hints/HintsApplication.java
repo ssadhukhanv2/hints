@@ -151,7 +151,7 @@ public class HintsApplication implements CommandLineRunner {
         User user = userRepository.findByUserNameOrEmail(userNameOrEmail);
         log.info("----------------------Logging UserDetails------------------------");
         log.info("User>>>>{}", user);
-        for (Node node : userRepository.findRootNodes(user)) {//user.getNodeList()
+        for (Node node : userRepository.findRootNodes(user.getUserId())) {//user.getNodeList()
             log.info("Node>>>>{}", node);
             log.info("Information>>>>{}", node.getInformationList());
             for (Node childNode : node.getReferenceNodeList()) {
@@ -200,7 +200,7 @@ public class HintsApplication implements CommandLineRunner {
                 node.addTag(tag5);
                 for (int j = 0; j < 5; j++) {
                     Node childNode = new Node();
-                    childNode.setNodeCategory(NodeCategory.CHILD);
+                    childNode.setNodeCategory(NodeCategory.REFERENCED);
                     childNode.setNodeTitle("Node " + i + "." + j);
                     childNode.setNodeDescription("Node Description for Node " + i + "." + j);
                     childNode.setUser(user);
@@ -212,7 +212,7 @@ public class HintsApplication implements CommandLineRunner {
 
                     for (int k = 0; k < 5; k++) {
                         Node superChildNode = new Node();
-                        superChildNode.setNodeCategory(NodeCategory.CHILD);
+                        superChildNode.setNodeCategory(NodeCategory.REFERENCED);
                         superChildNode.setNodeTitle("Node " + i + "." + j + "." + k);
                         superChildNode.setNodeDescription("Node Description for Node " + i + "." + j + "." + k);
                         superChildNode.setUser(user);

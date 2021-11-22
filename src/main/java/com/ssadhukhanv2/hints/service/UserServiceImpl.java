@@ -1,5 +1,6 @@
 package com.ssadhukhanv2.hints.service;
 
+import com.ssadhukhanv2.hints.model.Node;
 import com.ssadhukhanv2.hints.model.User;
 import com.ssadhukhanv2.hints.repo.UserRepository;
 import lombok.Data;
@@ -7,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Slf4j
@@ -39,5 +42,10 @@ public class UserServiceImpl implements UserService<User, Long> {
     @Override
     public User getUser(Long userId) {
         return userRepository.findById(userId);
+    }
+
+    @Override
+    public List<Node> getRootNodesForUser(Long userId) {
+        return userRepository.findRootNodes(userId);
     }
 }

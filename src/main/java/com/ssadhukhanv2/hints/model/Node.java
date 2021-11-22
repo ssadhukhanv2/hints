@@ -38,7 +38,7 @@ public class Node {
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "NODE_REFERENCE", joinColumns = {@JoinColumn(
             name = "NODE_ID"
-    )}, inverseJoinColumns = {@JoinColumn(name = "CHILD_NODE_ID")})
+    )}, inverseJoinColumns = {@JoinColumn(name = "REFERENCE_NODE_ID")})
     List<Node> referenceNodeList = new ArrayList<>();
 
 

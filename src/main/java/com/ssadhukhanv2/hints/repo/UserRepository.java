@@ -48,11 +48,11 @@ public class UserRepository{
 
 
     //findAll
-    public List<Node> findRootNodes(User user) {
+    public List<Node> findRootNodes(Long userId) {
 
         TypedQuery<Node> query = entityManager.createQuery(
                 "SELECT n FROM Node n JOIN User u ON u.userId=n.user.userId where u.userId=:userId and n.nodeCategory=:category", Node.class);
-        query.setParameter("userId", user.getUserId());
+        query.setParameter("userId", userId);
         query.setParameter("category", NodeCategory.ROOT);
 
         return query.getResultList();

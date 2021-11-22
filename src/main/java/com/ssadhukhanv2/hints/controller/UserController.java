@@ -7,12 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
-@RequestMapping("/nodes")
+@RequestMapping("/users")
 public class UserController {
 
 
     private UserService userService;
+
 
     @Autowired
     public UserController(UserService userService) {
@@ -26,6 +29,15 @@ public class UserController {
     User createUser(@RequestBody User user) {
         return userService.createUser(user);
     }
+
+    // GET
+    // node/{nodeId}
+    @GetMapping("/{userIdentifier}/nodes")
+    public @ResponseBody
+    List<Node> getRootNodes(@PathVariable(name = "userIdentifier") Long id) {
+        return userService.getRootNodesForUser(id);
+    }
+
 
     // GET
     // node/{nodeId}
