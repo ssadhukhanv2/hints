@@ -1,6 +1,14 @@
 # Getting Started
 
 
+## Things to be implemented:
+* Implement Aspect to find the response time of each service call
+* Create a client to consume the REST API
+* Implement Exception Handling (Learn Exception Handling)
+* Implement soft delete for users(deactivate user)
+* Implement Batch to consolidate status and send email to user
+
+
 ### Useful Queries:
 * SELECT * FROM USER;
 * SELECT * FROM CONTENT;

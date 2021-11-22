@@ -42,4 +42,10 @@ public class NodeRepository {
         return entityManager.createNativeQuery("SELECT * FROM NODE ", Node.class).getResultList();
     }
 
+
+    public void deleteById(Long nodeId) {
+        Node node = entityManager.find(Node.class, nodeId);
+        entityManager.remove(node);
+    }
+
 }

@@ -18,7 +18,7 @@ import java.util.List;
 @Transactional
 @Slf4j
 @Repository
-public class UserRepository {
+public class UserRepository{
     private EntityManager entityManager;
 
     @Autowired
@@ -26,7 +26,7 @@ public class UserRepository {
         this.entityManager = entityManager;
     }
 
-    //save & update
+
     public User save(User user) {
         if (user.getUserId() == null) {
             entityManager.persist(user);
@@ -36,11 +36,16 @@ public class UserRepository {
         return user;
     }
 
-    //findById
     public User findById(Long id) {
-        User user = entityManager.find(User.class, id);
-        return user;
+        return entityManager.find(User.class, id);
     }
+
+
+    public void deleteById(Long userId) {
+        User user = entityManager.find(User.class, userId);
+        entityManager.remove(user);
+    }
+
 
     //findAll
     public List<Node> findRootNodes(User user) {
