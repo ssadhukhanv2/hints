@@ -1,5 +1,15 @@
 # Getting Started
 
+#Book References:
+
+
+* How can I authenticate to spring via command line : https://learning.oreilly.com/library/view/spring-security-in/9781617297731/OEBPS/Text/02.htm#heading_id_4
+
+
+    curl -u user:93a01cf0-794b-4b98-86ef-54860f36f7f3 http://localhost:8080/hello
+
+    echo -n user:93a01cf0-794b-4b98-86ef-54860f36f7f3 | base64 
+    curl -H "Authorization: Basic dXNlcjo5M2EwMWNmMC03OTRiLTRiOTgtODZlZi01NDg2MGYzNmY3ZjM="        localhost:8080/hello
 
 
 # Scrap Board:

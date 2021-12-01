@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 
 // Summary of Security Implemented
@@ -62,6 +63,7 @@ public class HintAuthenticationProvider implements AuthenticationProvider {
     PasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String userName = authentication.getName();
         String userPassword = authentication.getCredentials().toString();

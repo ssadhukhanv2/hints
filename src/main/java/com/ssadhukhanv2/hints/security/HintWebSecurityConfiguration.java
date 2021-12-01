@@ -16,7 +16,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Slf4j
 @Configuration
-public class HintSecurityConfig extends WebSecurityConfigurerAdapter {
+public class HintWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
     @Override
